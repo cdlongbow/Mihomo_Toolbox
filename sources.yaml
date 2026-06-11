@@ -1,0 +1,70 @@
+# ══════════════════════════════════════════════════════════
+# 工作流① 输入配置 — 覆写脚本来源列表
+# ══════════════════════════════════════════════════════════
+# 新增脚本：在 scripts 下追加一条即可，下次触发工作流①自动生成
+# type: js   → function main(config) 格式
+# type: yaml → Mihomo Party YAML patch 格式（prepend-/append-）
+
+scripts:
+  - name: sing-mix-origin
+    type: js
+    url: https://raw.githubusercontent.com/Sakyvo/sing-mix/refs/heads/main/sing-mix_origin
+    description: "sing-mix Origin - 带国家/地区分组"
+
+  - name: sing-mix-lite
+    type: js
+    url: https://raw.githubusercontent.com/Sakyvo/sing-mix/refs/heads/main/sing-mix_lite
+    description: "sing-mix Lite - 精简版"
+
+  - name: flclash-scripts1
+    type: js
+    url: https://raw.githubusercontent.com/ZipZhu/Flclash-scripts/main/scripts1.js
+    description: "FlClash scripts1 - 详细分流"
+
+  - name: flclash-scripts2
+    type: js
+    url: https://raw.githubusercontent.com/ZipZhu/Flclash-scripts/main/scripts2.js
+    description: "FlClash scripts2 - 动态建组精简版"
+
+  - name: yanet
+    type: js
+    url: https://raw.githubusercontent.com/dahaha-365/YaNet/main/Mihomo/global_script.js
+    description: "YaNet - 功能全面的覆写脚本"
+
+  - name: override-rules
+    type: js
+    url: https://raw.githubusercontent.com/powerfullz/override-rules/refs/heads/main/convert.min.js
+    description: "powerfullz override-rules - 参数化覆写"
+
+  # YAML patch 示例（取消注释使用）：
+  # - name: my-patch
+  #   type: yaml
+  #   url: https://raw.githubusercontent.com/yourname/repo/main/patch.yaml
+  #   description: "自定义 YAML patch"
+
+# ══════════════════════════════════════════════════════════
+# proxy-providers 模板
+# 按 Mihomo 官方格式填写，会注入到每个生成的 output/*.yaml 中
+# ══════════════════════════════════════════════════════════
+proxy_providers:
+  - name: Airport-01
+    type: http
+    url: "YOUR_SUBSCRIPTION_URL_HERE"
+    interval: 86400
+    health-check:
+      enable: true
+      url: "https://www.gstatic.com/generate_204"
+      interval: 300
+    override:
+      additional-prefix: "[A1]"
+
+  # - name: Airport-02
+  #   type: http
+  #   url: "YOUR_SECOND_URL_HERE"
+  #   interval: 86400
+  #   health-check:
+  #     enable: true
+  #     url: "https://www.gstatic.com/generate_204"
+  #     interval: 300
+  #   override:
+  #     additional-prefix: "[A2]"
