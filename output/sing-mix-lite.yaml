@@ -1,198 +1,45 @@
-# 由 to-yaml.js 自动生成 — 2026-06-13T10:04:23.357Z
-# 来源脚本: https://raw.githubusercontent.com/Sakyvo/sing-mix/refs/heads/main/sing-mix_lite
+# ==================== 文件信息 ====================
+# 名称: sing-mix-lite
+# 来源: https://raw.githubusercontent.com/Sakyvo/sing-mix/refs/heads/main/sing-mix_lite
 # 说明: sing-mix Lite - 精简版
-# ⚠  proxy-providers 中的 url 请替换为真实订阅地址后使用
+# 生成: 2026-06-13T16:11:03.830Z
+# ⚠  proxy-providers 中的 url 请替换为真实订阅地址
+# ====================================================
 
-mixed-port: 7890
-allow-lan: false
-mode: rule
-log-level: warning
-ipv6: false
-external-controller: 127.0.0.1:9090
-dns:
-  enable: true
-  ipv6: false
-  enhanced-mode: fake-ip
-  fake-ip-range: 198.18.0.0/15
-  fake-ip-filter:
-    - '*.lan'
-    - '*.local'
-    - geosite:private
-    - geosite:google-cn
-    - geosite:synology
-    - geosite:cn
-    - +.example.com
-    - +.example.org
-  nameserver:
-    - https://1.1.1.1/dns-query#全部
-    - https://8.8.8.8/dns-query#全部
-  fallback:
-    - https://1.0.0.1/dns-query
-    - https://8.8.4.4/dns-query
-  fallback-filter:
-    geoip: true
-    geoip-code: CN
-    ipcidr:
-      - 240.0.0.0/4
-  cache-algorithm: arc
-  fake-ip-filter-mode: blacklist
-  respect-rules: true
-  default-nameserver:
-    - 223.5.5.5
-    - 119.29.29.29
-  nameserver-policy:
-    pdir.cc.cd:
-      - https://1.1.1.1/dns-query#全部
-      - https://8.8.8.8/dns-query#全部
-    vale.cc.cd:
-      - https://1.1.1.1/dns-query#全部
-      - https://8.8.8.8/dns-query#全部
-    geosite:cn:
-      - 223.5.5.5#DIRECT
-      - 119.29.29.29#DIRECT
-    geosite:private: system
-    geosite:google-cn:
-      - 223.5.5.5#DIRECT
-      - 119.29.29.29#DIRECT
-    geosite:synology:
-      - 223.5.5.5#DIRECT
-      - 119.29.29.29#DIRECT
-    geosite:openai:
-      - https://1.1.1.1/dns-query#AI
-      - https://8.8.8.8/dns-query#AI
-    geosite:anthropic:
-      - https://1.1.1.1/dns-query#AI
-      - https://8.8.8.8/dns-query#AI
-    geosite:google-gemini:
-      - https://1.1.1.1/dns-query#AI
-      - https://8.8.8.8/dns-query#AI
-    geosite:xai:
-      - https://1.1.1.1/dns-query#AI
-      - https://8.8.8.8/dns-query#AI
-  proxy-server-nameserver:
-    - 223.5.5.5#DIRECT
-    - 119.29.29.29#DIRECT
-    - system
-  direct-nameserver:
-    - 223.5.5.5#DIRECT
-    - 119.29.29.29#DIRECT
-    - system
-  direct-nameserver-follow-policy: true
-tun:
-  enable: true
-  stack: system
-  dns-hijack:
-    - any:53
-    - tcp://any:53
-  auto-route: true
-  auto-detect-interface: true
-  strict-route: true
+# ==================== 锚点配置 ====================
+BaseUT: &BaseUT {type: url-test, interval: 900, lazy: true, url: 'https://www.g.cn/generate_204', hidden: true, timeout: 1000}
+FilterHK: &FilterHK '(?i)港|🇭🇰|\bHK\b|hongkong|hong.?kong'
+FilterUS: &FilterUS '(?i)(?!.*aus)(美|🇺🇸|\bUS\b|\bUSA\b|united.?states)'
+
+
+# ==================== 代理提供者 ====================
 proxy-providers:
-  Airport-01:
-    type: http
-    url: YOUR_SUBSCRIPTION_URL_HERE
-    interval: 86400
-    health-check:
-      enable: true
-      url: https://www.gstatic.com/generate_204
-      interval: 300
-    override:
-      additional-prefix: '[A1]'
-proxies: []
-proxy-groups:
-  - name: URL Test - 全部
-    type: url-test
-    icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Available.png
-    hidden: true
-    url: https://www.g.cn/generate_204
-    interval: 900
-    tolerance: 50
-    lazy: true
-    timeout: 1000
-    include-all: true
-    filter: (?i)港|🇭🇰|\bHK\b|hongkong|hong.?kong
-  - name: BetterFB - 全部
-    type: url-test
-    icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Available.png
-    hidden: true
-    url: https://www.g.cn/generate_204
-    interval: 900
-    tolerance: 750
-    lazy: true
-    timeout: 1000
-    max-failed-times: 1
-    include-all: true
-    filter: (?i)港|🇭🇰|\bHK\b|hongkong|hong.?kong
-  - name: 全部
-    type: select
-    icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Available.png
-    include-all: true
-    filter: (?i)港|🇭🇰|\bHK\b|hongkong|hong.?kong
-    proxies:
-      - BetterFB - 全部
-      - URL Test - 全部
-  - name: URL Test - AI
-    type: url-test
-    icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/ChatGPT.png
-    hidden: true
-    url: https://www.g.cn/generate_204
-    interval: 900
-    tolerance: 50
-    lazy: true
-    timeout: 1000
-    include-all: true
-    filter: (?i)(?!.*aus)(美|🇺🇸|\bUS\b|\bUSA\b|united.?states)
-  - name: BetterFB - AI
-    type: url-test
-    icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/ChatGPT.png
-    hidden: true
-    url: https://www.g.cn/generate_204
-    interval: 900
-    tolerance: 750
-    lazy: true
-    timeout: 1000
-    max-failed-times: 1
-    include-all: true
-    filter: (?i)(?!.*aus)(美|🇺🇸|\bUS\b|\bUSA\b|united.?states)
-  - name: AI
-    type: select
-    icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/ChatGPT.png
-    include-all: true
-    filter: (?i)(?!.*aus)(美|🇺🇸|\bUS\b|\bUSA\b|united.?states)
-    proxies:
-      - BetterFB - AI
-      - URL Test - AI
-  - name: GLOBAL
-    type: select
-    proxies:
-      - 全部
-      - AI
-    icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Global.png
-rules:
-  - GEOSITE,category-ads-all,REJECT
-  - DOMAIN,test.com,全部
-  - DOMAIN,test.org,全部
-  - GEOSITE,private,DIRECT
-  - GEOIP,private,DIRECT,no-resolve
-  - GEOSITE,google-cn,DIRECT
-  - GEOSITE,synology,DIRECT
-  - DOMAIN-SUFFIX,sharepoint.com,DIRECT
-  - DOMAIN-SUFFIX,example.com,DIRECT
-  - DOMAIN-SUFFIX,example.org,DIRECT
-  - GEOSITE,openai,AI
-  - GEOSITE,anthropic,AI
-  - GEOSITE,google-gemini,AI
-  - GEOSITE,xai,AI
-  - GEOSITE,gfw,全部
-  - GEOSITE,cn,DIRECT
-  - GEOIP,CN,DIRECT,no-resolve
-  - MATCH,全部
+  Airport-01: {type: http, url: YOUR_SUBSCRIPTION_URL_HERE, interval: 86400, health-check: {enable: true, url: 'https://www.gstatic.com/generate_204', interval: 300}, override: {additional-prefix: '[A1]'}}
+
+
+# ==================== 核心配置 ====================
+mode: rule
+mixed-port: 7890
+ipv6: false
+allow-lan: false
+log-level: warning
+
+# 管理面板
+external-controller: '127.0.0.1:9090'
+
+# GEO 数据
 geodata-mode: true
 geo-auto-update: true
 geo-update-interval: 24
 geox-url:
-  geoip: https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip.dat
-  geosite: https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geosite.dat
+  geoip: 'https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip.dat'
+  geosite: 'https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geosite.dat'
+profile:
+  store-selected: true
+  store-fake-ip: false
+
+
+# ==================== 流量嗅探 ====================
 sniffer:
   enable: true
   force-dns-mapping: true
@@ -212,6 +59,122 @@ sniffer:
       ports:
         - 443
         - 8443
-profile:
-  store-selected: true
-  store-fake-ip: false
+
+
+# ==================== TUN 模式 ====================
+tun:
+  enable: true
+  stack: system
+  dns-hijack:
+    - 'any:53'
+    - 'tcp://any:53'
+  auto-route: true
+  auto-detect-interface: true
+  strict-route: true
+
+
+# ==================== DNS 配置 ====================
+dns:
+  enable: true
+  ipv6: false
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.0/15
+  fake-ip-filter:
+    - '*.lan'
+    - '*.local'
+    - 'geosite:private'
+    - 'geosite:google-cn'
+    - 'geosite:synology'
+    - 'geosite:cn'
+    - +.example.com
+    - +.example.org
+  nameserver:
+    - 'https://1.1.1.1/dns-query#全部'
+    - 'https://8.8.8.8/dns-query#全部'
+  fallback:
+    - 'https://1.0.0.1/dns-query'
+    - 'https://8.8.4.4/dns-query'
+  fallback-filter:
+    geoip: true
+    geoip-code: CN
+    ipcidr:
+      - 240.0.0.0/4
+  cache-algorithm: arc
+  listen: ~
+  fake-ip-filter-mode: blacklist
+  respect-rules: true
+  default-nameserver:
+    - 223.5.5.5
+    - 119.29.29.29
+  nameserver-policy:
+    pdir.cc.cd:
+      - 'https://1.1.1.1/dns-query#全部'
+      - 'https://8.8.8.8/dns-query#全部'
+    vale.cc.cd:
+      - 'https://1.1.1.1/dns-query#全部'
+      - 'https://8.8.8.8/dns-query#全部'
+    geosite:cn:
+      - '223.5.5.5#DIRECT'
+      - '119.29.29.29#DIRECT'
+    geosite:private: system
+    geosite:google-cn:
+      - '223.5.5.5#DIRECT'
+      - '119.29.29.29#DIRECT'
+    geosite:synology:
+      - '223.5.5.5#DIRECT'
+      - '119.29.29.29#DIRECT'
+    geosite:openai:
+      - 'https://1.1.1.1/dns-query#AI'
+      - 'https://8.8.8.8/dns-query#AI'
+    geosite:anthropic:
+      - 'https://1.1.1.1/dns-query#AI'
+      - 'https://8.8.8.8/dns-query#AI'
+    geosite:google-gemini:
+      - 'https://1.1.1.1/dns-query#AI'
+      - 'https://8.8.8.8/dns-query#AI'
+    geosite:xai:
+      - 'https://1.1.1.1/dns-query#AI'
+      - 'https://8.8.8.8/dns-query#AI'
+  proxy-server-nameserver:
+    - '223.5.5.5#DIRECT'
+    - '119.29.29.29#DIRECT'
+    - system
+  direct-nameserver:
+    - '223.5.5.5#DIRECT'
+    - '119.29.29.29#DIRECT'
+    - system
+  direct-nameserver-follow-policy: true
+
+
+# ==================== 策略组 ====================
+proxy-groups:
+  - {name: URL Test - 全部, type: url-test, <<: *BaseUT, include-all: true, filter: *FilterHK, icon: 'https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Available.png'}
+  - {name: BetterFB - 全部, type: url-test, <<: *BaseUT, include-all: true, filter: *FilterHK, icon: 'https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Available.png'}
+  - {name: 全部, type: select, include-all: true, filter: *FilterHK, proxies: [BetterFB - 全部, URL Test - 全部], icon: 'https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Available.png'}
+  - {name: URL Test - AI, type: url-test, <<: *BaseUT, include-all: true, filter: *FilterUS, icon: 'https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/ChatGPT.png'}
+  - {name: BetterFB - AI, type: url-test, <<: *BaseUT, include-all: true, filter: *FilterUS, icon: 'https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/ChatGPT.png'}
+  - {name: AI, type: select, include-all: true, filter: *FilterUS, proxies: [BetterFB - AI, URL Test - AI], icon: 'https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/ChatGPT.png'}
+  - {name: GLOBAL, type: select, proxies: [全部, AI], icon: 'https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Global.png'}
+
+
+# ==================== 路由规则 ====================
+rules:
+  - GEOSITE,category-ads-all,REJECT
+  - DOMAIN,test.com,全部
+  - DOMAIN,test.org,全部
+  - GEOSITE,private,DIRECT
+  - GEOIP,private,DIRECT,no-resolve
+  - GEOSITE,google-cn,DIRECT
+  - GEOSITE,synology,DIRECT
+  - DOMAIN-SUFFIX,sharepoint.com,DIRECT
+  - DOMAIN-SUFFIX,example.com,DIRECT
+  - DOMAIN-SUFFIX,example.org,DIRECT
+  - GEOSITE,openai,AI
+  - GEOSITE,anthropic,AI
+  - GEOSITE,google-gemini,AI
+  - GEOSITE,xai,AI
+  - GEOSITE,gfw,全部
+  - GEOSITE,cn,DIRECT
+  - GEOIP,CN,DIRECT,no-resolve
+  - MATCH,全部
+

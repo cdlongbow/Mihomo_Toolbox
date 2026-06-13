@@ -1,489 +1,56 @@
-# 由 to-yaml.js 自动生成 — 2026-06-13T10:04:23.163Z
-# 来源脚本: https://raw.githubusercontent.com/Sakyvo/sing-mix/refs/heads/main/sing-mix_origin
+# ==================== 文件信息 ====================
+# 名称: sing-mix-origin
+# 来源: https://raw.githubusercontent.com/Sakyvo/sing-mix/refs/heads/main/sing-mix_origin
 # 说明: sing-mix Origin - 带国家/地区分组
-# ⚠  proxy-providers 中的 url 请替换为真实订阅地址后使用
+# 生成: 2026-06-13T16:11:03.707Z
+# ⚠  proxy-providers 中的 url 请替换为真实订阅地址
+# ====================================================
 
-mixed-port: 7890
-allow-lan: false
-mode: rule
-log-level: warning
-ipv6: false
-external-controller: 127.0.0.1:9090
-dns:
-  enable: true
-  ipv6: false
-  enhanced-mode: fake-ip
-  fake-ip-range: 198.18.0.0/15
-  fake-ip-filter:
-    - +.cn
-    - rule-set:private
-    - rule-set:cn
-    - rule-set:google-cn
-    - rule-set:synology
-    - rule-set:googlefcm
-    - rule-set:epicgames
-    - rule-set:nvidia@cn
-    - rule-set:microsoft@cn
-    - rule-set:cloudflare@cn
-    - rule-set:steam@cn
-    - rule-set:category-game-platforms-download@cn
-    - rule-set:category-ntp
-    - rule-set:connectivity-check
-    - rule-set:apple
-    - rule-set:spotify
-    - rule-set:microsoft
-    - +.example.com
-    - +.example.org
-    - '*.lan'
-    - '*.local'
-  nameserver:
-    - https://1.1.1.1/dns-query#main
-  fallback:
-    - https://1.0.0.1/dns-query
-    - https://8.8.4.4/dns-query
-  fallback-filter:
-    geoip: true
-    geoip-code: CN
-    ipcidr:
-      - 240.0.0.0/4
-  listen: 0.0.0.0:1053
-  cache-algorithm: arc
-  prefer-h3: false
-  use-hosts: true
-  use-system-hosts: true
-  respect-rules: true
-  fake-ip-filter-mode: blacklist
-  default-nameserver:
-    - 223.5.5.5
-    - 119.29.29.29
-  proxy-server-nameserver:
-    - https://doh.pub/dns-query#DIRECT
-    - https://dns.alidns.com/dns-query#DIRECT
-  direct-nameserver:
-    - system
-    - https://dns.alidns.com/dns-query
-    - https://doh.pub/dns-query
-tun:
-  enable: true
-  stack: system
-  dns-hijack:
-    - any:53
-    - tcp://any:53
-  auto-route: true
-  auto-detect-interface: true
-  strict-route: true
+# ==================== 锚点配置 ====================
+BaseUT: &BaseUT {type: url-test, interval: 900, lazy: true, url: 'https://www.g.cn/generate_204', tolerance: 75, hidden: true, max-failed-times: 1, timeout: 750}
+FilterHK: &FilterHK '(?i)港|🇭🇰|\bHK\b|hongkong|hong.?kong'
+FilterUS: &FilterUS '(?i)(?!.*aus)(美|🇺🇸|\bUS\b|\bUSA\b|united.?states)'
+FilterTW: &FilterTW '(?i)台湾|台灣|🇹🇼|\bTW\b|taiwan'
+FilterSG: &FilterSG '(?i)新加坡|🇸🇬|\bSG\b|singapore'
+FilterJP: &FilterJP '(?i)日本|🇯🇵|\bJP\b|japan'
+FilterKR: &FilterKR '(?i)韩|🇰🇷|\bKR\b|korea'
+FilterMY: &FilterMY '(?i)马来|🇲🇾|\bMY\b|malaysia'
+FilterEU: &FilterEU '(?i)英|🇬🇧|\bUK\b|\bGB\b|united.?kingdom'
+
+
+# ==================== 代理提供者 ====================
 proxy-providers:
-  Airport-01:
-    type: http
-    url: YOUR_SUBSCRIPTION_URL_HERE
-    interval: 86400
-    health-check:
-      enable: true
-      url: https://www.gstatic.com/generate_204
-      interval: 300
-    override:
-      additional-prefix: '[A1]'
-proxies: []
-proxy-groups:
-  - name: main
-    type: select
-    proxies:
-      - All
-      - HK
-      - TW
-      - SG
-      - JP
-      - KR
-      - AS
-      - US
-      - Other
-    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Available.png
-  - name: URL Test - All
-    type: url-test
-    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Available.png
-    hidden: true
-    url: https://www.g.cn/generate_204
-    interval: 900
-    tolerance: 75
-    lazy: true
-    timeout: 750
-    max-failed-times: 1
-    include-all: true
-    filter: (?i)港|🇭🇰|\bHK\b|hongkong|hong.?kong
-  - name: All
-    type: select
-    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Available.png
-    include-all: true
-    filter: (?i)港|🇭🇰|\bHK\b|hongkong|hong.?kong
-    proxies:
-      - URL Test - All
-  - name: URL Test - ai
-    type: url-test
-    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/ChatGPT.png
-    hidden: true
-    url: https://www.g.cn/generate_204
-    interval: 900
-    tolerance: 75
-    lazy: true
-    timeout: 750
-    max-failed-times: 1
-    include-all: true
-    filter: (?i)(?!.*aus)(美|🇺🇸|\bUS\b|\bUSA\b|united.?states)
-  - name: ai
-    type: select
-    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/ChatGPT.png
-    include-all: true
-    filter: (?i)(?!.*aus)(美|🇺🇸|\bUS\b|\bUSA\b|united.?states)
-    proxies:
-      - URL Test - ai
-  - name: tg
-    type: select
-    proxies:
-      - SG
-      - main
-    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Telegram.png
-  - name: URL Test - HK
-    type: url-test
-    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Hong_Kong.png
-    hidden: true
-    url: https://www.g.cn/generate_204
-    interval: 900
-    tolerance: 75
-    lazy: true
-    timeout: 750
-    max-failed-times: 1
-    include-all: true
-    filter: (?i)港|🇭🇰|\bHK\b|hongkong|hong.?kong
-  - name: HK
-    type: select
-    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Hong_Kong.png
-    include-all: true
-    filter: (?i)港|🇭🇰|\bHK\b|hongkong|hong.?kong
-    proxies:
-      - URL Test - HK
-  - name: URL Test - TW
-    type: url-test
-    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Taiwan.png
-    hidden: true
-    url: https://www.g.cn/generate_204
-    interval: 900
-    tolerance: 75
-    lazy: true
-    timeout: 750
-    max-failed-times: 1
-    include-all: true
-    filter: (?i)台湾|台灣|🇹🇼|\bTW\b|taiwan
-  - name: TW
-    type: select
-    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Taiwan.png
-    include-all: true
-    filter: (?i)台湾|台灣|🇹🇼|\bTW\b|taiwan
-    proxies:
-      - URL Test - TW
-  - name: URL Test - SG
-    type: url-test
-    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Singapore.png
-    hidden: true
-    url: https://www.g.cn/generate_204
-    interval: 900
-    tolerance: 75
-    lazy: true
-    timeout: 750
-    max-failed-times: 1
-    include-all: true
-    filter: (?i)新加坡|🇸🇬|\bSG\b|singapore
-  - name: SG
-    type: select
-    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Singapore.png
-    include-all: true
-    filter: (?i)新加坡|🇸🇬|\bSG\b|singapore
-    proxies:
-      - URL Test - SG
-  - name: URL Test - JP
-    type: url-test
-    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Japan.png
-    hidden: true
-    url: https://www.g.cn/generate_204
-    interval: 900
-    tolerance: 75
-    lazy: true
-    timeout: 750
-    max-failed-times: 1
-    include-all: true
-    filter: (?i)日本|🇯🇵|\bJP\b|japan
-  - name: JP
-    type: select
-    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Japan.png
-    include-all: true
-    filter: (?i)日本|🇯🇵|\bJP\b|japan
-    proxies:
-      - URL Test - JP
-  - name: URL Test - KR
-    type: url-test
-    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Korea.png
-    hidden: true
-    url: https://www.g.cn/generate_204
-    interval: 900
-    tolerance: 75
-    lazy: true
-    timeout: 750
-    max-failed-times: 1
-    include-all: true
-    filter: (?i)韩|🇰🇷|\bKR\b|korea
-  - name: KR
-    type: select
-    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Korea.png
-    include-all: true
-    filter: (?i)韩|🇰🇷|\bKR\b|korea
-    proxies:
-      - URL Test - KR
-  - name: URL Test - AS
-    type: url-test
-    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Available.png
-    hidden: true
-    url: https://www.g.cn/generate_204
-    interval: 900
-    tolerance: 75
-    lazy: true
-    timeout: 750
-    max-failed-times: 1
-    include-all: true
-    filter: (?i)马来|🇲🇾|\bMY\b|malaysia
-  - name: AS
-    type: select
-    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Available.png
-    include-all: true
-    filter: (?i)马来|🇲🇾|\bMY\b|malaysia
-    proxies:
-      - URL Test - AS
-  - name: URL Test - US
-    type: url-test
-    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/United_States.png
-    hidden: true
-    url: https://www.g.cn/generate_204
-    interval: 900
-    tolerance: 75
-    lazy: true
-    timeout: 750
-    max-failed-times: 1
-    include-all: true
-    filter: (?i)(?!.*aus)(美|🇺🇸|\bUS\b|\bUSA\b|united.?states)
-  - name: US
-    type: select
-    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/United_States.png
-    include-all: true
-    filter: (?i)(?!.*aus)(美|🇺🇸|\bUS\b|\bUSA\b|united.?states)
-    proxies:
-      - URL Test - US
-  - name: URL Test - Other
-    type: url-test
-    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Available.png
-    hidden: true
-    url: https://www.g.cn/generate_204
-    interval: 900
-    tolerance: 75
-    lazy: true
-    timeout: 750
-    max-failed-times: 1
-    include-all: true
-    filter: (?i)英|🇬🇧|\bUK\b|\bGB\b|united.?kingdom
-  - name: Other
-    type: select
-    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Available.png
-    include-all: true
-    filter: (?i)英|🇬🇧|\bUK\b|\bGB\b|united.?kingdom
-    proxies:
-      - URL Test - Other
-  - name: GLOBAL
-    type: select
-    proxies:
-      - main
-      - All
-      - ai
-      - tg
-      - HK
-      - TW
-      - SG
-      - JP
-      - KR
-      - AS
-      - US
-      - Other
-    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Global.png
-rules:
-  - RULE-SET,category-ads-all,REJECT
-  - DOMAIN-SUFFIX,example.com,DIRECT
-  - DOMAIN-SUFFIX,example.org,DIRECT
-  - DOMAIN,test.com,main
-  - DOMAIN,test.org,main
-  - RULE-SET,private,DIRECT
-  - RULE-SET,private-ip,DIRECT,no-resolve
-  - RULE-SET,google-cn,DIRECT
-  - RULE-SET,synology,DIRECT
-  - DOMAIN-SUFFIX,sharepoint.com,DIRECT
-  - RULE-SET,microsoft@cn,DIRECT
-  - RULE-SET,category-game-platforms-download@cn,DIRECT
-  - RULE-SET,category-ai-!cn,ai
-  - RULE-SET,telegram,tg
-  - RULE-SET,gfw,main
-  - RULE-SET,cn,DIRECT
-  - RULE-SET,cn-ip,DIRECT,no-resolve
-  - MATCH,main
-rule-providers:
-  category-ads-all:
-    type: http
-    behavior: domain
-    format: mrs
-    path: ./rules/category-ads-all.mrs
-    url: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/category-ads-all.mrs
-    interval: 86400
-  private:
-    type: http
-    behavior: domain
-    format: mrs
-    path: ./rules/private.mrs
-    url: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/private.mrs
-    interval: 86400
-  google-cn:
-    type: http
-    behavior: domain
-    format: mrs
-    path: ./rules/google-cn.mrs
-    url: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/google-cn.mrs
-    interval: 86400
-  synology:
-    type: http
-    behavior: domain
-    format: mrs
-    path: ./rules/synology.mrs
-    url: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/synology.mrs
-    interval: 86400
-  microsoft@cn:
-    type: http
-    behavior: domain
-    format: mrs
-    path: ./rules/microsoft@cn.mrs
-    url: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/microsoft@cn.mrs
-    interval: 86400
-  category-game-platforms-download@cn:
-    type: http
-    behavior: domain
-    format: mrs
-    path: ./rules/category-game-platforms-download@cn.mrs
-    url: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/category-game-platforms-download@cn.mrs
-    interval: 86400
-  category-ai-!cn:
-    type: http
-    behavior: domain
-    format: mrs
-    path: ./rules/category-ai-!cn.mrs
-    url: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/category-ai-!cn.mrs
-    interval: 86400
-  telegram:
-    type: http
-    behavior: domain
-    format: mrs
-    path: ./rules/telegram.mrs
-    url: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/telegram.mrs
-    interval: 86400
-  gfw:
-    type: http
-    behavior: domain
-    format: mrs
-    path: ./rules/gfw.mrs
-    url: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/gfw.mrs
-    interval: 86400
-  cn:
-    type: http
-    behavior: domain
-    format: mrs
-    path: ./rules/cn.mrs
-    url: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/cn.mrs
-    interval: 86400
-  googlefcm:
-    type: http
-    behavior: domain
-    format: mrs
-    path: ./rules/googlefcm.mrs
-    url: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/googlefcm.mrs
-    interval: 86400
-  epicgames:
-    type: http
-    behavior: domain
-    format: mrs
-    path: ./rules/epicgames.mrs
-    url: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/epicgames.mrs
-    interval: 86400
-  nvidia@cn:
-    type: http
-    behavior: domain
-    format: mrs
-    path: ./rules/nvidia@cn.mrs
-    url: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/nvidia@cn.mrs
-    interval: 86400
-  cloudflare@cn:
-    type: http
-    behavior: domain
-    format: mrs
-    path: ./rules/cloudflare@cn.mrs
-    url: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/cloudflare@cn.mrs
-    interval: 86400
-  steam@cn:
-    type: http
-    behavior: domain
-    format: mrs
-    path: ./rules/steam@cn.mrs
-    url: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/steam@cn.mrs
-    interval: 86400
-  category-ntp:
-    type: http
-    behavior: domain
-    format: mrs
-    path: ./rules/category-ntp.mrs
-    url: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/category-ntp.mrs
-    interval: 86400
-  connectivity-check:
-    type: http
-    behavior: domain
-    format: mrs
-    path: ./rules/connectivity-check.mrs
-    url: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/connectivity-check.mrs
-    interval: 86400
-  apple:
-    type: http
-    behavior: domain
-    format: mrs
-    path: ./rules/apple.mrs
-    url: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/apple.mrs
-    interval: 86400
-  spotify:
-    type: http
-    behavior: domain
-    format: mrs
-    path: ./rules/spotify.mrs
-    url: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/spotify.mrs
-    interval: 86400
-  microsoft:
-    type: http
-    behavior: domain
-    format: mrs
-    path: ./rules/microsoft.mrs
-    url: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/microsoft.mrs
-    interval: 86400
-  private-ip:
-    type: http
-    behavior: ipcidr
-    format: mrs
-    path: ./rules/private-ip.mrs
-    url: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/private.mrs
-    interval: 86400
-  cn-ip:
-    type: http
-    behavior: ipcidr
-    format: mrs
-    path: ./rules/cn-ip.mrs
-    url: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/cn.mrs
-    interval: 86400
+  Airport-01: {type: http, url: YOUR_SUBSCRIPTION_URL_HERE, interval: 86400, health-check: {enable: true, url: 'https://www.gstatic.com/generate_204', interval: 300}, override: {additional-prefix: '[A1]'}}
+
+
+# ==================== 核心配置 ====================
+mode: rule
+mixed-port: 7890
+ipv6: false
+allow-lan: false
+log-level: warning
+
+# 管理面板
+external-controller: '127.0.0.1:9090'
+profile:
+  store-selected: true
+  store-fake-ip: false
+hosts:
+  dns.alidns.com:
+    - 223.5.5.5
+    - 223.6.6.6
+  doh.pub:
+    - 1.12.12.12
+    - 120.53.53.53
+  services.googleapis.cn:
+    - services.googleapis.com
+  +.mcdn.bilivideo.com:
+    - 0.0.0.0
+  +.mcdn.bilivideo.cn:
+    - 0.0.0.0
+
+
+# ==================== 流量嗅探 ====================
 sniffer:
   enable: true
   force-dns-mapping: true
@@ -503,19 +70,154 @@ sniffer:
       ports:
         - 443
         - 8443
-hosts:
-  dns.alidns.com:
+
+
+# ==================== TUN 模式 ====================
+tun:
+  enable: true
+  stack: system
+  dns-hijack:
+    - 'any:53'
+    - 'tcp://any:53'
+  auto-route: true
+  auto-detect-interface: true
+  strict-route: true
+
+
+# ==================== DNS 配置 ====================
+dns:
+  enable: true
+  ipv6: false
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.0/15
+  fake-ip-filter:
+    - +.cn
+    - 'rule-set:private'
+    - 'rule-set:cn'
+    - 'rule-set:google-cn'
+    - 'rule-set:synology'
+    - 'rule-set:googlefcm'
+    - 'rule-set:epicgames'
+    - 'rule-set:nvidia@cn'
+    - 'rule-set:microsoft@cn'
+    - 'rule-set:cloudflare@cn'
+    - 'rule-set:steam@cn'
+    - 'rule-set:category-game-platforms-download@cn'
+    - 'rule-set:category-ntp'
+    - 'rule-set:connectivity-check'
+    - 'rule-set:apple'
+    - 'rule-set:spotify'
+    - 'rule-set:microsoft'
+    - +.example.com
+    - +.example.org
+    - '*.lan'
+    - '*.local'
+  nameserver:
+    - 'https://1.1.1.1/dns-query#main'
+  fallback:
+    - 'https://1.0.0.1/dns-query'
+    - 'https://8.8.4.4/dns-query'
+  fallback-filter:
+    geoip: true
+    geoip-code: CN
+    ipcidr:
+      - 240.0.0.0/4
+  listen: '0.0.0.0:1053'
+  cache-algorithm: arc
+  prefer-h3: false
+  use-hosts: true
+  use-system-hosts: true
+  respect-rules: true
+  fake-ip-filter-mode: blacklist
+  default-nameserver:
     - 223.5.5.5
-    - 223.6.6.6
-  doh.pub:
-    - 1.12.12.12
-    - 120.53.53.53
-  services.googleapis.cn:
-    - services.googleapis.com
-  +.mcdn.bilivideo.com:
-    - 0.0.0.0
-  +.mcdn.bilivideo.cn:
-    - 0.0.0.0
-profile:
-  store-selected: true
-  store-fake-ip: false
+    - 119.29.29.29
+  proxy-server-nameserver:
+    - 'https://doh.pub/dns-query#DIRECT'
+    - 'https://dns.alidns.com/dns-query#DIRECT'
+  direct-nameserver:
+    - system
+    - 'https://dns.alidns.com/dns-query'
+    - 'https://doh.pub/dns-query'
+
+
+# ==================== 策略组 ====================
+proxy-groups:
+  - {name: main, type: select, proxies: [All, HK, TW, SG, JP, KR, AS, US, Other], icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Available.png'}
+  - {name: URL Test - All, type: url-test, <<: *BaseUT, include-all: true, filter: *FilterHK, icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Available.png'}
+  - {name: All, type: select, include-all: true, filter: *FilterHK, proxies: [URL Test - All], icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Available.png'}
+  - {name: URL Test - ai, type: url-test, <<: *BaseUT, include-all: true, filter: *FilterUS, icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/ChatGPT.png'}
+  - {name: ai, type: select, include-all: true, filter: *FilterUS, proxies: [URL Test - ai], icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/ChatGPT.png'}
+  - {name: tg, type: select, proxies: [SG, main], icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Telegram.png'}
+  - {name: URL Test - HK, type: url-test, <<: *BaseUT, include-all: true, filter: *FilterHK, icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Hong_Kong.png'}
+  - {name: HK, type: select, include-all: true, filter: *FilterHK, proxies: [URL Test - HK], icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Hong_Kong.png'}
+  - {name: URL Test - TW, type: url-test, <<: *BaseUT, include-all: true, filter: *FilterTW, icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Taiwan.png'}
+  - {name: TW, type: select, include-all: true, filter: *FilterTW, proxies: [URL Test - TW], icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Taiwan.png'}
+  - {name: URL Test - SG, type: url-test, <<: *BaseUT, include-all: true, filter: *FilterSG, icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Singapore.png'}
+  - {name: SG, type: select, include-all: true, filter: *FilterSG, proxies: [URL Test - SG], icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Singapore.png'}
+  - {name: URL Test - JP, type: url-test, <<: *BaseUT, include-all: true, filter: *FilterJP, icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Japan.png'}
+  - {name: JP, type: select, include-all: true, filter: *FilterJP, proxies: [URL Test - JP], icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Japan.png'}
+  - {name: URL Test - KR, type: url-test, <<: *BaseUT, include-all: true, filter: *FilterKR, icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Korea.png'}
+  - {name: KR, type: select, include-all: true, filter: *FilterKR, proxies: [URL Test - KR], icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Korea.png'}
+  - {name: URL Test - AS, type: url-test, <<: *BaseUT, include-all: true, filter: *FilterMY, icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Available.png'}
+  - {name: AS, type: select, include-all: true, filter: *FilterMY, proxies: [URL Test - AS], icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Available.png'}
+  - {name: URL Test - US, type: url-test, <<: *BaseUT, include-all: true, filter: *FilterUS, icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/United_States.png'}
+  - {name: US, type: select, include-all: true, filter: *FilterUS, proxies: [URL Test - US], icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/United_States.png'}
+  - {name: URL Test - Other, type: url-test, <<: *BaseUT, include-all: true, filter: *FilterEU, icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Available.png'}
+  - {name: Other, type: select, include-all: true, filter: *FilterEU, proxies: [URL Test - Other], icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Available.png'}
+  - {name: GLOBAL, type: select, proxies: [main, All, ai, tg, HK, TW, SG, JP, KR, AS, US, Other], icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Global.png'}
+
+
+# ==================== 路由规则 ====================
+rules:
+  - RULE-SET,category-ads-all,REJECT
+  - DOMAIN-SUFFIX,example.com,DIRECT
+  - DOMAIN-SUFFIX,example.org,DIRECT
+  - DOMAIN,test.com,main
+  - DOMAIN,test.org,main
+  - RULE-SET,private,DIRECT
+  - RULE-SET,private-ip,DIRECT,no-resolve
+  - RULE-SET,google-cn,DIRECT
+  - RULE-SET,synology,DIRECT
+  - DOMAIN-SUFFIX,sharepoint.com,DIRECT
+  - RULE-SET,microsoft@cn,DIRECT
+  - RULE-SET,category-game-platforms-download@cn,DIRECT
+  - RULE-SET,category-ai-!cn,ai
+  - RULE-SET,telegram,tg
+  - RULE-SET,gfw,main
+  - RULE-SET,cn,DIRECT
+  - RULE-SET,cn-ip,DIRECT,no-resolve
+  - MATCH,main
+
+
+# ==================== 规则集 ====================
+BehaviorDN: &BehaviorDN {type: http, behavior: domain, format: mrs, interval: 86400}
+BehaviorIP: &BehaviorIP {type: http, behavior: ipcidr, format: mrs, interval: 86400}
+
+rule-providers:
+  # ── 域名规则
+  category-ads-all: {<<: *BehaviorDN, url: 'https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/category-ads-all.mrs'}
+  private: {<<: *BehaviorDN, url: 'https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/private.mrs'}
+  google-cn: {<<: *BehaviorDN, url: 'https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/google-cn.mrs'}
+  synology: {<<: *BehaviorDN, url: 'https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/synology.mrs'}
+  microsoft@cn: {<<: *BehaviorDN, url: 'https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/microsoft@cn.mrs'}
+  category-game-platforms-download@cn: {<<: *BehaviorDN, url: 'https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/category-game-platforms-download@cn.mrs'}
+  category-ai-!cn: {<<: *BehaviorDN, url: 'https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/category-ai-!cn.mrs'}
+  telegram: {<<: *BehaviorDN, url: 'https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/telegram.mrs'}
+  gfw: {<<: *BehaviorDN, url: 'https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/gfw.mrs'}
+  cn: {<<: *BehaviorDN, url: 'https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/cn.mrs'}
+  googlefcm: {<<: *BehaviorDN, url: 'https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/googlefcm.mrs'}
+  epicgames: {<<: *BehaviorDN, url: 'https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/epicgames.mrs'}
+  nvidia@cn: {<<: *BehaviorDN, url: 'https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/nvidia@cn.mrs'}
+  cloudflare@cn: {<<: *BehaviorDN, url: 'https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/cloudflare@cn.mrs'}
+  steam@cn: {<<: *BehaviorDN, url: 'https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/steam@cn.mrs'}
+  category-ntp: {<<: *BehaviorDN, url: 'https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/category-ntp.mrs'}
+  connectivity-check: {<<: *BehaviorDN, url: 'https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/connectivity-check.mrs'}
+  apple: {<<: *BehaviorDN, url: 'https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/apple.mrs'}
+  spotify: {<<: *BehaviorDN, url: 'https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/spotify.mrs'}
+  microsoft: {<<: *BehaviorDN, url: 'https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/microsoft.mrs'}
+  # ── IP 规则
+  private-ip: {<<: *BehaviorIP, url: 'https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/private.mrs'}
+  cn-ip: {<<: *BehaviorIP, url: 'https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/cn.mrs'}
+
+# ==================== EOF ====================
