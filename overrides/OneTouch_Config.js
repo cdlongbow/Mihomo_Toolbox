@@ -1,7 +1,7 @@
 /**
  * 覆写脚本 — OneTouch_Config
  * 由 to-override.js 从 OneTouch_Config.yaml 自动生成
- * 生成时间: 2026-06-11T15:16:37.878Z
+ * 生成时间: 2026-06-13T16:49:38.318Z
  *
  * 兼容客户端:
  *   FlClash v0.8.85+  /  Mihomo Party  /  Clash Party
