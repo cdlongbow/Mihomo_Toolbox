@@ -1,4 +1,4 @@
-# 由 to-yaml.js 自动生成 — 2026-06-11T15:12:23.982Z
+# 由 to-yaml.js 自动生成 — 2026-06-13T10:04:23.357Z
 # 来源脚本: https://raw.githubusercontent.com/Sakyvo/sing-mix/refs/heads/main/sing-mix_lite
 # 说明: sing-mix Lite - 精简版
 # ⚠  proxy-providers 中的 url 请替换为真实订阅地址后使用
@@ -99,7 +99,75 @@ proxy-providers:
     override:
       additional-prefix: '[A1]'
 proxies: []
-proxy-groups: []
+proxy-groups:
+  - name: URL Test - 全部
+    type: url-test
+    icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Available.png
+    hidden: true
+    url: https://www.g.cn/generate_204
+    interval: 900
+    tolerance: 50
+    lazy: true
+    timeout: 1000
+    include-all: true
+    filter: (?i)港|🇭🇰|\bHK\b|hongkong|hong.?kong
+  - name: BetterFB - 全部
+    type: url-test
+    icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Available.png
+    hidden: true
+    url: https://www.g.cn/generate_204
+    interval: 900
+    tolerance: 750
+    lazy: true
+    timeout: 1000
+    max-failed-times: 1
+    include-all: true
+    filter: (?i)港|🇭🇰|\bHK\b|hongkong|hong.?kong
+  - name: 全部
+    type: select
+    icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Available.png
+    include-all: true
+    filter: (?i)港|🇭🇰|\bHK\b|hongkong|hong.?kong
+    proxies:
+      - BetterFB - 全部
+      - URL Test - 全部
+  - name: URL Test - AI
+    type: url-test
+    icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/ChatGPT.png
+    hidden: true
+    url: https://www.g.cn/generate_204
+    interval: 900
+    tolerance: 50
+    lazy: true
+    timeout: 1000
+    include-all: true
+    filter: (?i)(?!.*aus)(美|🇺🇸|\bUS\b|\bUSA\b|united.?states)
+  - name: BetterFB - AI
+    type: url-test
+    icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/ChatGPT.png
+    hidden: true
+    url: https://www.g.cn/generate_204
+    interval: 900
+    tolerance: 750
+    lazy: true
+    timeout: 1000
+    max-failed-times: 1
+    include-all: true
+    filter: (?i)(?!.*aus)(美|🇺🇸|\bUS\b|\bUSA\b|united.?states)
+  - name: AI
+    type: select
+    icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/ChatGPT.png
+    include-all: true
+    filter: (?i)(?!.*aus)(美|🇺🇸|\bUS\b|\bUSA\b|united.?states)
+    proxies:
+      - BetterFB - AI
+      - URL Test - AI
+  - name: GLOBAL
+    type: select
+    proxies:
+      - 全部
+      - AI
+    icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Global.png
 rules:
   - GEOSITE,category-ads-all,REJECT
   - DOMAIN,test.com,全部

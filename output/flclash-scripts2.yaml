@@ -1,4 +1,4 @@
-# 由 to-yaml.js 自动生成 — 2026-06-11T15:12:24.007Z
+# 由 to-yaml.js 自动生成 — 2026-06-13T10:04:23.769Z
 # 来源脚本: https://raw.githubusercontent.com/ZipZhu/Flclash-scripts/main/scripts2.js
 # 说明: FlClash scripts2 - 动态建组精简版
 # ⚠  proxy-providers 中的 url 请替换为真实订阅地址后使用
@@ -52,6 +52,12 @@ proxy-groups:
     icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Proxy.png
     type: select
     proxies:
+      - 美国节点
+      - 日本节点
+      - 狮城节点
+      - 香港节点
+      - 台湾节点
+      - 其他节点
       - 自动选择
       - 手动切换
       - DIRECT
@@ -65,6 +71,51 @@ proxy-groups:
     icon: https://testingcf.jsdelivr.net/gh/shindgewongxj/WHATSINStash@master/icon/select.png
     include-all: true
     type: select
+  - name: 美国节点
+    icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/United_States.png
+    include-all: true
+    filter: (?i)美|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|US|United States
+    type: url-test
+    interval: 300
+    tolerance: 50
+  - name: 日本节点
+    icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Japan.png
+    include-all: true
+    filter: (?i)日本|川日|东京|大阪|泉日|埼玉|沪日|深日|JP|Japan
+    type: url-test
+    interval: 300
+    tolerance: 50
+  - name: 狮城节点
+    icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Singapore.png
+    include-all: true
+    filter: (?i)新加坡|坡|狮城|SG|Singapore
+    type: url-test
+    interval: 300
+    tolerance: 50
+  - name: 香港节点
+    icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Hong_Kong.png
+    include-all: true
+    filter: (?i)港|HK|hk|Hong Kong|HongKong|hongkong
+    type: url-test
+    interval: 300
+    tolerance: 50
+  - name: 台湾节点
+    icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Taiwan.png
+    include-all: true
+    filter: (?i)台|新北|彰化|TW|Taiwan
+    type: url-test
+    interval: 300
+    tolerance: 50
+  - name: 其他节点
+    icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Global.png
+    include-all: true
+    exclude-filter: >-
+      美|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|US|United
+      States|日本|川日|东京|大阪|泉日|埼玉|沪日|深日|JP|Japan|新加坡|坡|狮城|SG|Singapore|港|HK|hk|Hong
+      Kong|HongKong|hongkong|台|新北|彰化|TW|Taiwan
+    type: url-test
+    interval: 300
+    tolerance: 50
   - name: 广告拦截
     icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/AdBlack.png
     type: select
@@ -82,6 +133,12 @@ proxy-groups:
     type: select
     proxies:
       - 节点选择
+      - 美国节点
+      - 日本节点
+      - 狮城节点
+      - 香港节点
+      - 台湾节点
+      - 其他节点
       - 自动选择
       - 手动切换
       - DIRECT
@@ -93,6 +150,12 @@ proxy-groups:
       - 节点选择
       - 自动选择
       - 手动切换
+      - 美国节点
+      - 日本节点
+      - 狮城节点
+      - 香港节点
+      - 台湾节点
+      - 其他节点
       - 广告拦截
       - 应用净化
       - 漏网之鱼
