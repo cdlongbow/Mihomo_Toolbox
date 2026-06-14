@@ -53,7 +53,7 @@ scripts:
 
   - name: Ayanami0-configs
     type: js
-    url: https://raw.githubusercontent.com/Ayanami0xL1l1th/Ayanami0-configs/refs/heads/main/Ayanami0's%20override.js
+    url: 'https://raw.githubusercontent.com/Ayanami0xL1l1th/Ayanami0-configs/refs/heads/main/Ayanami0's%20override.js'
     description: "Ayanami0-configs"
 
   - name: Accademia_Clash_Configuration_Template
