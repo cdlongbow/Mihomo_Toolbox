@@ -1,5 +1,6 @@
 # Mihomo Toolbox
 
+On June 14th, 2026, it was reconstructed by claude code.
 两条完全独立的工作流，互不依赖。
 
 ```
