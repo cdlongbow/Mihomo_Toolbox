@@ -1,21 +1,20 @@
 /**
  * 覆写脚本 — configfull
  * 由 to-override.js 从 configfull.yaml 自动生成
- * 生成时间: 2026-06-13T16:49:38.327Z
+ * 生成时间: 2026-06-15T07:14:36.440Z
  *
  * 兼容客户端:
  *   FlClash v0.8.85+  /  Mihomo Party  /  Clash Party
  *   Clash Verge Rev   /  Sparkle
  *
  * 覆写内容:
- *   ✔ proxy-groups  — 完整分组结构（include-all/filter 原样保留）
- *   ✔ rules         — 完整路由规则
- *   ✔ rule-providers — 规则集定义
- *   ✔ dns           — DNS 配置
- *   ✔ sniffer       — 嗅探配置
- *   ✔ tun           — TUN 配置（enable 默认 false，由客户端界面控制）
- *   ✔ 其他非骨架字段
- *   ✔ 静态节点注入  — 🟢 直连
+ *   ✔ proxy-groups    — 完整分组结构（include-all/filter 原样保留）
+ *   ✔ proxy-providers — 自定义 provider
+ *   ✔ rules           — 完整路由规则
+ *   ✔ rule-providers  — 规则集定义
+ *   ✔ dns / sniffer / tun / 其他非骨架字段
+ *   ✔ 静态节点注入    — 🟢 直连
+ *
  *
  * 不覆写的字段（由客户端/用户自己管理）:
  *   端口、allow-lan、mode、log-level、管理面板、GEO数据源、认证信息
@@ -26,8 +25,8 @@ function main(config) {
 
   // ══════════════════════════════════════════════════════════════
   // § 1  注入静态节点
-  //      源 YAML 里 proxies: 定义的节点（如 DNS劫持、直接连接）
-  //      订阅里没有这些节点，需主动注入，否则分组引用会悬空
+  //      源配置 proxies: 里的手动节点（直连/拒绝/IPV4优先等）
+  //      目标订阅里没有这些节点，必须注入，否则分组引用会悬空
   // ══════════════════════════════════════════════════════════════
 
   const STATIC_PROXIES = [
@@ -39,8 +38,8 @@ function main(config) {
 ];
 
   if (STATIC_PROXIES.length > 0) {
-    const existingNames = new Set((config.proxies || []).map(p => p.name));
     config.proxies = config.proxies || [];
+    const existingNames = new Set(config.proxies.map(p => p.name));
     for (const p of STATIC_PROXIES) {
       if (!existingNames.has(p.name)) {
         config.proxies.push(p);
@@ -49,9 +48,9 @@ function main(config) {
   }
 
   // ══════════════════════════════════════════════════════════════
-  // § 2  覆写 proxy-groups
-  //      原样替换，分组里的 include-all + filter 由 Mihomo 内核
-  //      在运行时自动从 proxy-providers 填充节点，无需硬编码节点名
+  // § 2  覆写 proxy-groups（原样替换）
+  //      include-all / include-all-providers / filter 字段
+  //      由 Mihomo 内核在运行时从订阅的 proxy-providers 自动填充节点
   // ══════════════════════════════════════════════════════════════
 
   config["proxy-groups"] = [
@@ -996,7 +995,74 @@ function main(config) {
 ];
 
   // ══════════════════════════════════════════════════════════════
-  // § 3  覆写其余字段（dns / rules / rule-providers / sniffer 等）
+  // § 3  覆写 proxy-providers（仅保留 http/file 类型）
+  //      inline 类型已跳过（避免把订阅节点序列化进覆写文件）
+  //      目标订阅自身的 providers 不受影响，会被合并保留
+  // ══════════════════════════════════════════════════════════════
+
+  const PROVIDERS = {
+    "Airport_01": {
+        "type": "http",
+        "interval": 86400,
+        "health-check": {
+            "enable": true,
+            "url": "https://www.gstatic.com/generate_204",
+            "interval": 300
+        },
+        "filter": "^(?!.*(拒绝|直连|群|邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|贩卖|通知|倒卖|防止|国内|地址|频道|无法|说明|提示|特别|访问|支持|教程|关注|更新|作者|加入|USE|USED|TOTAL|EXPIRE|EMAIL|Panel|Channel|Author|traffic))",
+        "proxy": "故障转移",
+        "url": "订阅链接1",
+        "override": {
+            "additional-prefix": "[机场名称1]",
+            "skip-cert-verify": true,
+            "udp": true
+        }
+    },
+    "Airport_02": {
+        "type": "http",
+        "interval": 86400,
+        "health-check": {
+            "enable": true,
+            "url": "https://www.gstatic.com/generate_204",
+            "interval": 300
+        },
+        "filter": "^(?!.*(拒绝|直连|群|邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|贩卖|通知|倒卖|防止|国内|地址|频道|无法|说明|提示|特别|访问|支持|教程|关注|更新|作者|加入|USE|USED|TOTAL|EXPIRE|EMAIL|Panel|Channel|Author|traffic))",
+        "proxy": "故障转移",
+        "url": "订阅链接2",
+        "override": {
+            "additional-prefix": "[机场名称2]",
+            "skip-cert-verify": true,
+            "udp": true
+        }
+    },
+    "Airport_03": {
+        "type": "http",
+        "interval": 86400,
+        "health-check": {
+            "enable": true,
+            "url": "https://www.gstatic.com/generate_204",
+            "interval": 300
+        },
+        "filter": "^(?!.*(拒绝|直连|群|邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|贩卖|通知|倒卖|防止|国内|地址|频道|无法|说明|提示|特别|访问|支持|教程|关注|更新|作者|加入|USE|USED|TOTAL|EXPIRE|EMAIL|Panel|Channel|Author|traffic))",
+        "proxy": "故障转移",
+        "url": "订阅链接3",
+        "override": {
+            "additional-prefix": "[机场名称3]",
+            "skip-cert-verify": true,
+            "udp": true
+        }
+    }
+};
+  if (Object.keys(PROVIDERS).length > 0) {
+    config["proxy-providers"] = Object.assign(
+      {},
+      config["proxy-providers"] || {},  // 保留目标订阅原有 provider
+      PROVIDERS                          // 追加/覆盖自定义 provider
+    );
+  }
+
+  // ══════════════════════════════════════════════════════════════
+  // § 4  覆写其余字段（dns / rules / rule-providers / sniffer 等）
   // ══════════════════════════════════════════════════════════════
 
   const OVERRIDE = {
@@ -1983,11 +2049,9 @@ function main(config) {
     }
 };
 
-  // tun: enable 强制 false，避免与客户端自身 TUN 管理冲突
-  // 如需开启 TUN 请在客户端界面操作，或手动修改此脚本
-  if (OVERRIDE.tun) {
-    OVERRIDE.tun.enable = false;
-  }
+  // tun.enable 强制 false：避免与客户端自身 TUN 管理冲突
+  // 如需开启 TUN 请在客户端界面操作，或手动删除此行
+  if (OVERRIDE.tun) OVERRIDE.tun.enable = false;
 
   Object.assign(config, OVERRIDE);
 
